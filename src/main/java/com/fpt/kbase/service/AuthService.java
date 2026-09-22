@@ -7,4 +7,5 @@ public interface AuthService {
     JwtResponse authenticateUser(LoginRequest loginRequest);
     void forgotPassword(String email);
     void resetPassword(String email, String otp, String newPassword);
+    void registerUser(com.fpt.kbase.dto.request.RegisterRequest request);
 }

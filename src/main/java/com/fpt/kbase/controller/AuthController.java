@@ -38,6 +38,17 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "Đăng ký tài khoản mới", description = "Tạo một tài khoản mới với quyền mặc định là USER.")
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody com.fpt.kbase.dto.request.RegisterRequest registerRequest) {
+        try {
+            authService.registerUser(registerRequest);
+            return ResponseEntity.ok(new MessageResponse("Đăng ký thành công!"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
     @Operation(summary = "Đăng xuất", description = "Đăng xuất tài khoản. Với JWT, phía Backend chỉ trả về OK. Phía Frontend cần xóa token ở localStorage.")
     @ApiResponse(responseCode = "200", description = "Đăng xuất thành công", 
                  content = @Content(schema = @Schema(implementation = MessageResponse.class)))

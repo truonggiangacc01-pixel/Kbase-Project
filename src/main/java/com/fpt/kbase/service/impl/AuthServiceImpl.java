@@ -120,4 +120,19 @@ public class AuthServiceImpl implements AuthService {
         // Xóa OTP sau khi dùng
         passwordResetRepository.delete(passwordReset);
     }
+
+    @Override
+    public void registerUser(com.fpt.kbase.dto.request.RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email đã được sử dụng!");
+        }
+
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(encoder.encode(request.getPassword()));
+        user.setFullName(request.getFullName());
+        user.setSystemRole("ROLE_USER");
+
+        userRepository.save(user);
+    }
 }
